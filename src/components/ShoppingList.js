@@ -1,26 +1,34 @@
-import '../styles/shoppinglist.css'
 import { plantList } from '../datas/plantList'
+import '../styles/shoppinglist.css'
+import PlantItem from './PlantItem'
 
-export function ShoppingListCategories() {
-  const categoriesSet = new Set(plantList.map(plantList => plantList.category))
-  const categories = Array.from(categoriesSet)
-  return (
-    <div>
-      {categories.map(category => (
-        <p key={category}>{category}</p>
-      ))}
-    </div>
-  )
+function ShoppingList() {
+	const categories = plantList.reduce(
+		(acc, plant) =>
+			acc.includes(plant.category) ? acc : acc.concat(plant.category),
+		[]
+	)
+
+	return (
+		<div>
+			<ul>
+				{categories.map((cat) => (
+					<li key={cat}>{cat}</li>
+				))}
+			</ul>
+			<ul className='lmj-plant-list'>
+				{plantList.map((plant) => (
+					<PlantItem 
+            name={plant.name}
+            id={plant.id}
+            light={plant.light}
+            water={plant.water}
+            cover={plant.cover}
+          />
+				))}
+			</ul>
+		</div>
+	)
 }
 
-export function ShoppingList() {
-  return (
-    <ul>
-      {plantList.map((plant) => (
-        plant.isSpecialOffer
-        ? <div className='lmj-Sales'><li key={`${plant.id}`}>{plant.name}<span> - Soldes !</span></li></div>
-        : <li key={`${plant.id}`}>{plant.name}</li>
-      ))}
-    </ul>
-  )
-}
+export default ShoppingList
