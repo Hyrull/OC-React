@@ -4,11 +4,15 @@ import '../styles/footer.css'
 function Footer() {
 	const [inputValue, setInputValue] = useState('')
 
-  function handleBlur() {
-    if (!inputValue.includes('@')) {
-      alert('Ajoute une arobase mec')
-    }
-  }
+	function handleInput(e) {
+		setInputValue(e.target.value)
+	}
+
+	function handleBlur() {
+		if (!inputValue.includes('@')) {
+			alert("Attention, il n'y a pas d'@, ceci n'est pas une adresse valide 😥")
+		}
+	}
 
 	return (
 		<footer className='lmj-footer'>
@@ -16,7 +20,12 @@ function Footer() {
 				Pour les passionné·e·s de plantes 🌿🌱🌵
 			</div>
 			<div className='lmj-footer-elem'>Laissez-nous votre mail :</div>
-      <textarea value={inputValue} onChange={(e) => setInputValue(e.target.value)} onBlur={handleBlur}></textarea>
+			<input
+				placeholder='Entrez votre mail'
+				onChange={handleInput}
+				value={inputValue}
+				onBlur={handleBlur}
+			/>
 		</footer>
 	)
 }
