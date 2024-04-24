@@ -1,12 +1,29 @@
-import { useState } from 'react'
-import '../styles/Cart.css'
+import { useState, useEffect } from 'react';
+import '../styles/Cart.css';
 
 function Cart({ cart, updateCart }) {
-	const [isOpen, setIsOpen] = useState(true)
-	const total = cart.reduce(
-		(acc, plantType) => acc + plantType.amount * plantType.price,
-		0
-	)
+	const [isOpen, setIsOpen] = useState(true);
+	const [total, setTotal] = useState(0);
+
+	useEffect(() => {
+		const savedCart = JSON.parse(localStorage.getItem('cart'));
+		if (savedCart && savedCart.length > 0) {
+			updateCart(savedCart);
+		}
+	}, [updateCart]);
+
+	useEffect(() => {
+		const newTotal = cart.reduce(
+			(acc, { amount, price }) => acc + amount * price,
+			0
+		);
+		setTotal(newTotal);
+	}, [cart]);
+
+	useEffect(() => {
+		localStorage.setItem('cart', JSON.stringify(cart));
+	}, [cart]);
+
 	return isOpen ? (
 		<div className='lmj-cart'>
 			<button
@@ -25,7 +42,7 @@ function Cart({ cart, updateCart }) {
 							</div>
 						))}
 					</ul>
-					<h3>Total :{total}€</h3>
+					<h3>Total : {total}€</h3>
 					<button onClick={() => updateCart([])}>Vider le panier</button>
 				</div>
 			) : (
@@ -41,7 +58,7 @@ function Cart({ cart, updateCart }) {
 				Ouvrir le Panier
 			</button>
 		</div>
-	)
+	);
 }
 
-export default Cart
+export default Cart;

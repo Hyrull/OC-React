@@ -4,13 +4,10 @@ import logo from '../assets/logo.png'
 import Cart from './Cart'
 import Footer from './Footer'
 import ShoppingList from './ShoppingList'
-import Categories from './Categories'
 import '../styles/Layout.css'
 
 function App() {
 	const [cart, updateCart] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState('');
-  
 	return (
 		<div>
 			<Banner>
@@ -19,8 +16,7 @@ function App() {
 			</Banner>
 			<div className='lmj-layout-inner'>
 				<Cart cart={cart} updateCart={updateCart} />
-        <Categories onSelectCategory={setSelectedCategory}></Categories>
-				<ShoppingList cart={cart} updateCart={updateCart} selectedCategory={selectedCategory}/>
+				<ShoppingList cart={cart} updateCart={updateCart} />
 			</div>
 			<Footer />
 		</div>

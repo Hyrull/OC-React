@@ -1,26 +1,23 @@
-import { plantList } from '../datas/plantList';
+import '../styles/Categories.css'
 
-function Categories( {onSelectCategory }) {
-  const categories = plantList.reduce(
-    (acc, elem) =>
-        acc.includes(elem.category) ? acc : acc.concat(elem.category),
-        []
-  )
-
-  function filterCategories(category) {
-    onSelectCategory(category)
-  }
-
-  return (
-    <div className="lmj-categories">
-      <select onChange={(e) => filterCategories(e.target.value)}>
-        {categories.map(item => (
-          <option key={item} value={item}>{item}</option>
-        ))}
-      </select>
-      <button onClick={() => filterCategories('')}>Reset</button>
-    </div>
-  )
+function Categories({ setActiveCategory, categories, activeCategory }) {
+	return (
+		<div className='lmj-categories'>
+			<select
+				value={activeCategory}
+				onChange={(e) => setActiveCategory(e.target.value)}
+				className='lmj-categories-select'
+			>
+				<option value=''>---</option>
+				{categories.map((cat) => (
+					<option key={cat} value={cat}>
+						{cat}
+					</option>
+				))}
+			</select>
+			<button onClick={() => setActiveCategory('')}>Réinitialiser</button>
+		</div>
+	)
 }
 
 export default Categories
